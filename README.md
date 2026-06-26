@@ -14,9 +14,11 @@ O ecossistema é dividido em dois fluxos principais e independentes:
 
 **Fluxo de Inferência Diária em Lote (DAG 1):** Executado de forma automática todas as madrugadas às 03:00 UTC. Este pipeline extrai os dados clínicos consolidados das últimas 24 horas, realiza a engenharia de features em tempo de execução, carrega o modelo preditivo que está em produção no disco e exporta um relatório contendo apenas os pacientes classificados como de alto risco para a camada Gold de dados.
 
-![alt text](./assets/image.png)
+![alt text](./assets/dag1.png)
 
 **Fluxo de Retreino Mensal Automatizado (DAG 2):** Executado no primeiro dia de cada mês. Este pipeline é responsável por garantir que o modelo não sofra com a degradação de performance ao longo do tempo (data drift). Ele extrai uma janela histórica completa do hospital, avalia múltiplos algoritmos simultaneamente em um ambiente de validação cruzada, seleciona o modelo campeão com base em métricas de segurança assistencial e atualiza o binário de produção de forma transparente.
+
+![alt text](./assets/dag2.png)
 
 ## MAPEAMENTO DE FEATURES DO HEAR DISEASE PREDICTIONS PARA O ECOSSISTEMA HOSPITALAR
 
@@ -55,7 +57,7 @@ A extração utiliza variáveis de bind nativas do driver oracledb, o que impede
 
 ## ESTRATÉGIA DE RETREINO MENSAL AUTOMATIZADO (DAG 2)
 
-O pipeline de retreino foi projetado para processar volumes massivos de dados, extraindo um histórico de 8.6 milhões de registros do Tasy a cada rodada mensal. Devido a essa grande escala, foram implementadas duas travas de segurança de infraestrutura:
+O pipeline de retreino foi projetado para processar volumes massivos de dados, extraindo um histórico de 8.358.143 milhões de registros do Tasy a cada rodada mensal. Devido a essa grande escala, foram implementadas duas travas de segurança de infraestrutura:
 
 Proteção de Memória RAM por Amostragem Estratificada: Se o volume total de registros extraídos ultrapassar o limite global configurado de 15 milhões de linhas, o script intercepta o DataFrame e realiza uma amostragem estratificada limitando a base a 10 milhões de registros, preservando rigorosamente a distribuição original da variável alvo (target). Isso evita o estouro de memória (OOM Killer) no container Docker do Airflow.
 
