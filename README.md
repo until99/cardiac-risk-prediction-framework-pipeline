@@ -72,11 +72,11 @@ O custo de um Falso Negativo (enviar para casa um paciente que está infartando)
 Por essa razão, adotamos o F2-Score como métrica decisora no processo de seleção do modelo mensal. O F2-Score altera o balanço matemático para dar ao Recall um peso duas vezes maior do que o da Precisão. O limiar de decisão foi fixado globalmente em 0.3. O algoritmo que apresentar o maior F2-Score médio na validação cruzada de 3 partições (folds) é automaticamente selecionado como o novo modelo de produção.
 
 Resultados médios obtidos no último ciclo de validação (com um treshold de 0.3):
-**RandomForest:** AUC-ROC de **0.6596** e F2-Score de **0.0158**
-**XGBoost:** AUC-ROC de **0.7713** e F2-Score de **0.0193**
-**HistGradientBoosting:** AUC-ROC de **0.8685** e F2-Score de **0.0093**
+**RandomForest:** AUC-ROC de **0.9192** e F2-Score de **0.0235**
+**XGBoost:** AUC-ROC de **0.9248** e F2-Score de **0.0219**
+**HistGradientBoosting:** AUC-ROC de **0.9446** e F2-Score de **0.0093**
 
-O modelo selecionado para implantação foi o **XGBoost** com F2-Score final de **0.0193**.
+O modelo selecionado para implantação foi o **XGBoost** com F2-Score final de **0.0235**.
 
 ## MECANISMOS DE ROBUSTEZ, IDEMPOTÊNCIA E PREVENÇÃO DE FALHAS EM PRODUÇÃO
 
